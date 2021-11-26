@@ -9,15 +9,20 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <title>EPS TOPIK NEPAL -LOGIN</title>
+    <style>
+        body {
+            background-color:#f1f3e6;
+        }
+    </style>
   </head>
   <body>
   <div class="container">
     <div class="row">
-        <div class="col-3">
+        <div class="col-2">
 
         </div>
 
-        <div class="col-6 my-5">
+        <div class="col-8 my-5">
 
         <div class="card">
             <div class="card-header bg-dark text-center text-white">
@@ -25,19 +30,17 @@
 
             </div>
             <div class="card-body">
-            <?php if(isset($_SESSION['message'])):?>
-           <div class="my-1 alert alert-<?php echo $_SESSION['msg_type'];?>">
-           <?php 
-           echo $_SESSION['message'];
-           unset($_SESSION['message']);
-           unset($_SESSION['msg_type']);
-
-
-           ?>
-           </div>
-        <?php endif; ?>
-
+                <?php include("process-user.php");?>
+            
         <?php 
+
+            if(isset($_SESSION['login'])){
+                echo $_SESSION['login'];
+                unset($_SESSION['login']);
+            }
+
+
+
         if(isset($_SESSION['no-login-message'])){
             echo $_SESSION['no-login-message'];
             unset($_SESSION['no-login-message']);
@@ -57,8 +60,15 @@
                     </div>
 
                     <div class="form-group">
-                        <input type="submit" name="login" value="Login" class="btn btn-primary">
+                        <input type="submit" name="login" value="Login" class="btn btn-primary btn-lg btn-block">
                     </div>
+
+                    <div class="form-group text-center bg-dark text-white">
+
+                    <p>2021 All right reserved EPS TOPIK NEPAL Created By: <a href="#">Sarun Ale</a></p>
+                       
+                    </div>
+                    
 
                 </form>
             </div>
@@ -67,7 +77,7 @@
             </div>
 
 
-            <div class="col-3">
+            <div class="col-2">
             
             </div>
     </div>

@@ -1,5 +1,5 @@
-
-<?php //include('login-check.php');?>
+<?php include_once('partials/config.php'); ?>
+<?php include('login-check.php');?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -29,25 +29,40 @@
     <ul class="navbar-nav ms-auto">
 
     <li class="nav-item active">
-        <a class="nav-link" href="manage-dashboard.php">Manage Dashboard <span class="sr-only">(current)</span></a>
+        <a class="nav-link btn btn-success mx-1" href="manage-dashboard.php">Manage Dashboard <span class="sr-only">(current)</span></a>
       </li>
 
       <li class="nav-item active">
-        <a class="nav-link" href="manage-user.php">Manage User <span class="sr-only">(current)</span></a>
+        <a class="nav-link btn btn-success mx-1" href="manage-user.php">Manage User <span class="sr-only">(current)</span></a>
       </li>
 
       <li class="nav-item active">
-        <a class="nav-link" href="manage-category.php">Manage Category <span class="sr-only">(current)</span></a>
+        <a class="nav-link btn btn-success mx-1" href="manage-category.php">Manage Category <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="manage-course.php">Manage Course <span class="sr-only">(current)</span></a>
+        <a class="nav-link btn btn-success mx-1" href="manage-course.php">Manage Course <span class="sr-only">(current)</span></a>
       </li>
 
       <li class="nav-item active">
-        <a class="nav-link" href="logout-user.php">Logout <span class="sr-only">(current)</span></a>
+        <a class="nav-link btn btn-success mx-1" href="manage-course.php">Manage Questions <span class="sr-only">(current)</span></a>
       </li>
 
+      <li class="nav-item active">
+        <a class="nav-link btn btn-success mx-1" href="manage-course.php">Manage Pages <span class="sr-only">(current)</span></a>
+      </li>
+
+  
     
-    </ul>
+    </ul> 
+   
+      <div class="form-inline my-2 my-lg-0">
+      <a href="#" class="btn btn-secondary mx-1"><i title="<?php echo $_SESSION['user'] ?>" class="fas fa-user"></i></a>
+        
+      <a title="Logout" class="btn btn-info ms-2 my-sm-0" href="logout-user.php"><i class="fad fa-sign-out"></i></a>
+      </div>
+     
+   
+   
+
   </div>
 </nav>

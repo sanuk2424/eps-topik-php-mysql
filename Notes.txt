@@ -1,5 +1,5 @@
 categories
-id
+id 
 title
 image_name
 active

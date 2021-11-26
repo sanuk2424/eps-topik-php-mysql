@@ -1,7 +1,7 @@
 <?php
 
 //incldue constant.php fro SITEURL
-session_start();
+
 define('BASEURLADDRESS','http://localhost/eps-topik/');
 //Destroy the session
 

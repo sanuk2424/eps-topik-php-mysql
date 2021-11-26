@@ -1,14 +1,26 @@
 <?php 
-session_start();
+// session_start();
 
-//define('SITEURL','http://localhost/eps-topik/');
-include('partials/config.php');
+// //define('SITEURL','http://localhost/eps-topik/');
 
-//Create Constant to store non repeating values.
-define('DB_HOST','localhost');
-define('DB_USERNAME','root');
-define('DB_PASSWORD','');
-define('DB_NAME','eps-topik-php');
+
+// //Create Constant to store non repeating values.
+// define('DB_HOST','localhost');
+// define('DB_USERNAME','root');
+// define('DB_PASSWORD','');
+// define('DB_NAME','eps-topik-php');
+
+
+// function dbConnect(){
+//     $conn = mysqli_connect(DB_HOST,DB_USERNAME,DB_PASSWORD) or die(mysqli_error());   //Database connection
+//     $db_select = mysqli_select_db($conn,DB_NAME) or die(mysqli_error()); //Selecting database
+//     return $conn;
+// }
+
+include_once('partials/config.php');
+include('partials/db_connection.php');
+
+
 $id=0;
 $update = false;
 $first_name ="";
@@ -17,11 +29,6 @@ $username="";
 $email="";
 $password="";
 
-function dbConnect(){
-    $conn = mysqli_connect(DB_HOST,DB_USERNAME,DB_PASSWORD) or die(mysqli_error());   //Database connection
-    $db_select = mysqli_select_db($conn,DB_NAME) or die(mysqli_error()); //Selecting database
-    return $conn;
-}
 
 //Add User
 //check whether the submit button is clicked or not
@@ -270,17 +277,30 @@ if(isset($_POST['update'])) {
         //later we will check validation
         //check username and email already exist or not
 
-        if(user_exist($username,$email)) {
-            echo "Username or email already exist";
-            die();
-        } else {
-            // further go
-            echo "update here";
-            die();
-        }
+        if(user_exist($username,$email,$id)) {
+            // echo "Username or email already exist of id selected";
+            $conn = dbConnect();
 
-       
-        try {
+            // create sql query
+            $sql_query_email = "SELECT * FROM users WHERE 
+            email NOT IN (SELECT email FROM users WHERE !(username='$username' OR email='$email'))";
+           $sql_query_username = "SELECT * FROM users WHERE 
+           username NOT IN (SELECT username FROM users WHERE !(username='$username' OR email='$email'))";
+          //Execute query
+          
+
+          $result_username = mysqli_query($conn,$sql_query_username);
+           $result_email = mysqli_query($conn,$sql_query_email);
+
+           
+
+           //check query executed successfully or not
+
+          
+           if($result_email ==TRUE AND $result_username ==TRUE) {
+                //check email/username already exist or not
+                if((mysqli_num_rows($result_username)==1) AND (mysqli_num_rows($result_email)==1)){
+                    try {
 
             $conn = dbConnect();
             //execute query 
@@ -304,6 +324,59 @@ if(isset($_POST['update'])) {
             mysqli_close($conn);
 
         }
+                    
+
+                } else {
+                    //echo "Username/Email Already exist";
+                    $_SESSION['message']="Username or Email Already exist";
+                    $_SESSION['msg_type'] ="danger";
+                    header("location: ".SITEURL."admin/manage-user.php");
+                    
+                }
+
+           } else {
+            //    echo "Failed to execute query";
+               $_SESSION['message']="Failed to execute query";
+               $_SESSION['msg_type'] ="danger";
+               header("location: ".SITEURL."admin/manage-user.php");
+           }
+            
+
+        } else {
+            // further go
+            $_SESSION['message']='Unauthorized Access';
+            $_SESSION['msg_type']='danger';
+            header("location: ".SITEURL."admin/manage-user.php");
+            // echo "update here";
+            // stop the process
+            die();
+        }
+
+       
+        // try {
+
+        //     $conn = dbConnect();
+        //     //execute query 
+        //     $result = mysqli_query($conn,$sql);
+
+        //     //check query executed successfully or not
+        //     if($result==TRUE) {
+        //         //Query executed successfully
+        //         $_SESSION['message']="User Updated Successfully!";
+        //         $_SESSION['msg_type'] ="success";
+        //         header("location: ".SITEURL."admin/manage-user.php");
+        //     } else {
+        //         //Failed to execute query
+        //         $_SESSION['message']="Failed To Update User!";
+        //         $_SESSION['msg_type'] ="danger";
+        //         header("location: ".SITEURL."admin/manage-user.php");
+                
+        //     }
+
+        // } finally {
+        //     mysqli_close($conn);
+
+        // }
         
 
     } else {
@@ -317,13 +390,17 @@ if(isset($_POST['update'])) {
 
 
 
-function user_exist($username,$email) {
+function user_exist($username,$email,$id=0) {
     //connect to database
     $conn = dbConnect();
     //create sql query
     $sql = "SELECT * FROM users WHERE 
-    username='$username' OR email='$email'
+    (username='$username' OR email='$email')
     ";
+    if($id!=0) {
+        $sql .= "  AND id=$id";
+    }
+  
     //execute the query
     $result = mysqli_query($conn,$sql);
     return mysqli_num_rows($result)>0? true : false;
@@ -430,23 +507,22 @@ if(isset($_POST['login'])) {
         //User Available and login succcess
         $_SESSION['message'] = "Login Successful";
         $_SESSION['msg_type'] = "success";
+      
         // create a session if user logged in or  not and logout unset it
         $_SESSION['user'] = $username;
         //Redirect to Dashboard or home page of admin
         header("location: ".SITEURL."admin/manage-dashboard.php");
     } else {
         //User not available
-        $_SESSION['message'] = "Username or password did not match";
-        $_SESSION['msg_type'] = "danger";
+        $_SESSION['login'] = "<div class='alert alert-danger'>Username or Password did not match.</div>";
+     
         header("location: ".SITEURL."admin");
 
     }
 
     } else {
-        $_SESSION['message'] = "Please fill username and password.";
-        $_SESSION['msg_type'] = "danger";
-
-     
+        $_SESSION['login'] ="<div class='alert alert-danger'>Please fill username and password.</div>";
+       
         header("location: ".SITEURL."admin");
 
     }

@@ -10,8 +10,8 @@
            </div>
         <?php endif; ?>
 
-<div class="row my-2">
-    <div class="col-3 my-1">
+<div class="row my-1">
+    <div class="col-3">
         
         <!-- Add/Update User start here -->
         <?php if(!isset($_GET['change_password'])){
@@ -149,7 +149,7 @@
         <!-- Change Password end here -->
 
     </div>
-    <div class="col-9 my-2">
+    <div class="col-9">
         <div class="card my-2">
             <div class="card-header text-center text-white bg-dark">User Lists</div>
             <div class="card-body">
