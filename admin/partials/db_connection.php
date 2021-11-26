@@ -12,6 +12,11 @@ function dbConnect(){
     return $conn;
 }
 
+function dbConnectPreparedStatement() {
+    return new mysqli(DB_HOST,DB_USERNAME,DB_PASSWORD,DB_NAME);
+
+}
+
 
 
 

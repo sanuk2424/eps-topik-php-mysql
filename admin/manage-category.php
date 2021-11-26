@@ -22,34 +22,57 @@
 
                <div class="form-group">
                    <label for="Title">Title</label>
-                   <input type="text" name="title" class="form-control">
+                   <input type="text" name="title" class="form-control" value="<?php echo $title; ?>">
                </div>
+
+               <?php if($image_name!=""):?>
                <div class="form-group">
-                   <label for="Image">Select Image</label>
+               <label for="Image">Current Image:</label>
+               <img 
+               src="../images/category/<?php echo $image_name;?>" 
+               width="150px" 
+               alt="<?php echo $image_name;?>">
+
+               </div>
+              
+                <?php endif; ?>
+               <div class="form-group">
+                   <label for="Image">Select Image:</label>
                    <input type="file" name="image" class="form-control-file">
                </div>
                <div class="form-group">
                    <label for="Active">Active</label>
                <div class="form-check">
-                        <input type="radio" name="active" value="Yes" class="form-check-input">
-                        <label class="form-check-label" for="exampleRadios1">
+                        <input <?php if($active=='Yes'){echo 'checked';}?> type="radio" name="active" value="Yes" class="form-check-input">
+                        <label  class="form-check-label" for="exampleRadios1">
                            Yes
                         </label>
                         </div>
 
 
                         <div class="form-check">
-                        <input type="radio" name="active" value="No" class="form-check-input">
+                        <input <?php if($active=='No'){echo 'checked';}?> type="radio" name="active" value="No" class="form-check-input">
                         <label class="form-check-label">
                            No
                         </label>
                         </div>
 
                </div>
-
+               <?php if($image_name!=""):?>
+               <input type="hidden" name="id" value="<?php echo $_GET['edit'];?>">
+                   <input type="hidden" name="current_image" value="<?php echo $image_name;?>">
+                <?php endif;?>
                <div class="form-group">
+                   <?php if(!isset($_GET['edit'])):?>
+                  
                    <input type="submit" name="add" value="Add Category" class="btn btn-success">
+                   <?php else: ?>
+
+                   <input type="submit" name="update" value="Update Category" class="btn btn-primary">
+                   <?php endif;?>
                </div>
+
+               
                </form>
 
                <!-- Category form ends here -->
