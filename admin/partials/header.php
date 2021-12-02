@@ -43,15 +43,30 @@
         <a class="nav-link btn btn-success mx-1" href="manage-course.php">Manage Course <span class="sr-only">(current)</span></a>
       </li>
 
-      <li class="nav-item active">
-        <a class="nav-link btn btn-success mx-1" href="manage-course.php">Manage Questions <span class="sr-only">(current)</span></a>
-      </li>
+
+      <li class="nav-item dropdown bg-success">
+          <a class="nav-link dropdown-toggle btn btn-success" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Manage Question
+          </a>
+          <ul class="dropdown-menu bg-success my-2" aria-labelledby="navbarDropdown">
+
+         
+            <li class="btn btn-success"><a class="dropdown-item" href="manage-paragraph-question.php">Manage Paragraph Question</a></li>
+           
+            <li><hr class="dropdown-divider"></li>
+            <li class="btn btn-success"><a class="dropdown-item " href="manage-filling-question.php">Manage Filling Question</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li class="btn btn-success"><a class="dropdown-item " href="#">Manage Image Question</a></li>
+          </ul>
+        </li>
+
+     
 
       <li class="nav-item active">
         <a class="nav-link btn btn-success mx-1" href="manage-course.php">Manage Pages <span class="sr-only">(current)</span></a>
       </li>
 
-  
+      
     
     </ul> 
    
@@ -66,3 +81,5 @@
 
   </div>
 </nav>
+
+
